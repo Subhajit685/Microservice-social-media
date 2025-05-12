@@ -42,6 +42,7 @@ jobs:
               working-directory: frontend
 
     deploy-project:
+        needs: test-project
         name: Deploy on lunix mechine
         runs-on: ubuntu-latest
 
