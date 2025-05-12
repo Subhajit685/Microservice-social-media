@@ -6,6 +6,6 @@ const Hello = ({ name }) => <p>Hello, {name}!</p>;
 
 test('renders Hello component', () => {
   render(<Hello name="Subhajit" />);
-  screen.debug(); // 👈 This will print the rendered DOM
+  screen.deug(); // 👈 This will print the rendered DOM
   expect(screen.getByText('Hello, Subhajit!')).toBeInTheDocument();
 });
