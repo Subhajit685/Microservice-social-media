@@ -1,0 +1,9 @@
+name: Print hello world!
+on: push
+jobs: 
+    display-Hello-World:
+        name: Run on ubuntu-latest
+        runs-on: ubuntu-latest
+        steps:
+            - name: Display Hello World
+              run: echo "Hello World!"
