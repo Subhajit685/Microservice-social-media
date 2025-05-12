@@ -10,7 +10,7 @@ jobs:
     # name of the job
     test-project:
 
-        # what machine it neeed
+        # what mechine it neeed
         name: Run on Lunix
         runs-on: ubuntu-latest
 
@@ -21,7 +21,7 @@ jobs:
             - name: Check
               uses: actions/checkout@v4
 
-            # Install Node on this lunix machine what version 20
+            # Install Node on this lunix mechine what version 20
             - name: Node install
               uses: actions/setup-node@v4
               with:
@@ -40,5 +40,25 @@ jobs:
             - name: Run text
               run: npm run test
               working-directory: frontend
+
+    deploy-project:
+        name: Deploy on lunix mechine
+        runs-on: ubuntu-latest
+
+        steps:
+
+            - name: Check
+              uses: actions/checkout@v4
+
+            - name: Install node
+              uses: actions/setup-node@v4
+              with:
+                node-version: 20
+
+            - name: Install dependency
+              run: npm ci
+
+            - name: Deploy project
+              run: echo "Deploying ...."
             
             
