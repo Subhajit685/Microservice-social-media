@@ -6,4 +6,4 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Show github
-              run: echo "${{github}}"
+              run: echo "${{toJson(github)}}"
