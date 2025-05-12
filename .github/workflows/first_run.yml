@@ -1,5 +1,5 @@
 name: Print hello world!
-on: push
+on: workflow_dispatch
 jobs: 
     display-Hello-World:
         name: Run on ubuntu-latest

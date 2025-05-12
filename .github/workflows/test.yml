@@ -1,9 +1,40 @@
+# Name of this workflow
 name: Test Project
+
+# Event for treger workflow
 on: [push, workflow_dispatch]
+
+# jobs for what kind of work it should be
 jobs:
+
+    # name of the job
     test-project:
-        name: Text Project
+
+        # what machine it neeed
+        name: Run on Lunix
         runs-on: ubuntu-latest
+
+        # steps for complete this jobs
         steps:
-            - name: Show github
-              run: echo "${{toJson(github)}}"
+
+            # checkout for clone this project
+            - name: Check
+              uses: actions/checkout@v4
+
+            # Install Node on this lunix machine what version 20
+            - name: Node install
+              uses: actions/setup-node@v4
+              with:
+                node-version: 20
+
+            # Install dependency 
+            - name: Install Dependency
+              run: npm ci
+              working-directory: frontend
+              
+            # Run text
+            - name: Run text
+              run: npm run test
+              working-directory: frontend
+            
+            
