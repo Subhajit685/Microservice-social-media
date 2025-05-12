@@ -2,7 +2,13 @@
 name: Test Project
 
 # Event for treger workflow
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - ".github/workflows/*"
+  workflow_dispatch:
 
 # jobs for what kind of work it should be
 jobs:
