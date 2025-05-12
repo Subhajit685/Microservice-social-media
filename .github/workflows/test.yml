@@ -1,0 +1,9 @@
+name: Test Project
+on: [push, workflow_dispatch]
+jobs:
+    test-project:
+        name: Text Project
+        runs-on: ubuntu-latest
+        steps:
+            - name: Show github
+              run: echo "${{github}}"
