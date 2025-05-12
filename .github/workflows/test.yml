@@ -26,12 +26,16 @@ jobs:
               uses: actions/setup-node@v4
               with:
                 node-version: 20
+            
+            # Check node version
+            - name: Check node version
+              run: node -v
 
             # Install dependency 
             - name: Install Dependency
               run: npm ci
               working-directory: frontend
-              
+
             # Run text
             - name: Run text
               run: npm run test
