@@ -1,0 +1,86 @@
+version: '3'
+
+services:
+  apigatewaya:
+    build: 
+     dockerfile: Dockerfile
+     context: ./api_gatewaya
+    container_name: apigatewaya
+    ports:
+      - "5000:5000"
+    restart: always
+    env_file:
+      - ./api_gatewaya/.env
+    depends_on:
+      - userservice
+      - postservice
+      - messageservice
+      - notiservice
+    networks:
+      - microservice_social_media
+      
+  userservice:
+    build: 
+     dockerfile: Dockerfile
+     context: ./user_service
+    container_name: userservice
+    ports:
+      - "5001:5001"
+    restart: always
+    env_file:
+      - ./user_service/.env
+    networks:
+      - microservice_social_media
+
+  postservice:
+    build: 
+      dockerfile: Dockerfile
+      context: ./post_service
+    container_name: postservice
+    ports:
+      - "5002:5002"
+    restart: always
+    env_file:
+      - ./post_service/.env
+    networks:
+      - microservice_social_media
+
+  messageservice:
+    build: 
+      dockerfile: Dockerfile
+      context: ./message_service
+    container_name: messageservice
+    restart: always
+    ports:
+      - "5003:5003"
+    env_file:
+      - ./message_service/.env
+    networks:
+      - microservice_social_media
+
+  notiservice:
+    build: 
+      dockerfile: Dockerfile
+      context: ./noti_service
+    container_name: notiservice
+    ports:
+      - "5004:5004"
+    restart: always
+    env_file:
+      - ./noti_service/.env
+    networks:
+      - microservice_social_media
+
+  frontend:
+    build: 
+      dockerfile: Dockerfile
+      context: ./frontend
+    container_name: frontend
+    ports:
+      - "5173:5173"
+    restart: always
+    depends_on:
+      - apigatewaya
+
+networks:
+  microservice_social_media:
