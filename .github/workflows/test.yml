@@ -6,61 +6,71 @@ on: [push, workflow_dispatch]
 
 # jobs for what kind of work it should be
 jobs:
+  # name of the job
+  test-project:
+    # what mechine it neeed
+    name: Run on Lunix
+    runs-on: ubuntu-latest
 
-    # name of the job
-    test-project:
+    # steps for complete this jobs
+    steps:
+      # checkout for clone this project
+      - name: Check
+        uses: actions/checkout@v4
 
-        # what mechine it neeed
-        name: Run on Lunix
-        runs-on: ubuntu-latest
+      # Install Node on this lunix mechine what version 20
+      - name: Node install
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-        # steps for complete this jobs
-        steps:
+      # Check node version
+      - name: Check node version
+        run: node -v
 
-            # checkout for clone this project
-            - name: Check
-              uses: actions/checkout@v4
+      # cache data
+      - name: Cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      
+      - name: Show key
+        run: echo "${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}"
+        
+      # Install dependency
+      - name: Install Dependency
+        run: npm ci
+        working-directory: frontend
 
-            # Install Node on this lunix mechine what version 20
-            - name: Node install
-              uses: actions/setup-node@v4
-              with:
-                node-version: 20
-            
-            # Check node version
-            - name: Check node version
-              run: node -v
+      # Run text
+      - name: Run text
+        run: npm run test
+        working-directory: frontend
 
-            # Install dependency 
-            - name: Install Dependency
-              run: npm ci
-              working-directory: frontend
+  deploy-project:
+    needs: test-project
+    name: Deploy on lunix mechine
+    runs-on: ubuntu-latest
 
-            # Run text
-            - name: Run text
-              run: npm run test
-              working-directory: frontend
+    steps:
+      - name: Check
+        uses: actions/checkout@v4
 
-    deploy-project:
-        needs: test-project
-        name: Deploy on lunix mechine
-        runs-on: ubuntu-latest
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-        steps:
+      - name: Cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
-            - name: Check
-              uses: actions/checkout@v4
+      - name: Install dependency
+        run: npm ci
+        working-directory: frontend
 
-            - name: Install node
-              uses: actions/setup-node@v4
-              with:
-                node-version: 20
-
-            - name: Install dependency
-              run: npm ci
-              working-directory: frontend
-
-            - name: Deploy project
-              run: echo "Deploying ...."
-            
-            
+      - name: Deploy project
+        run: echo "Deploying ...."
